@@ -1,8 +1,8 @@
 {
-	"name": "fuelPrizeStats",
+	"name": "fuelPriceStats",
 	"version": "0.0.1",
 	"license": "MIT",
-	"repository": "https://github.com/bohrsty/fuelPrizeStats",
+	"repository": "https://github.com/bohrsty/fuelPriceStats",
 	"scripts": {
 		"watch": "./node_modules/webpack/bin/webpack.js --config webpack.config-dev.js --watch --display-error-details",
 		"build": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --progress --display-error-details"

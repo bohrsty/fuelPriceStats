@@ -4,6 +4,7 @@
 
 ### Added
 - add required configuration, initial files and folders
+- add classes and methods to request tankerkönig api and store values in sqlite database
 
 ### Changed
 
@@ -12,3 +13,4 @@
 
 
 ### Fixed
+- fix typo prize -> price

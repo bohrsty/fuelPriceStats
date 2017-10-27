@@ -1,5 +1,5 @@
 /*
- * This file is part of the fuelPrizeStats package.
+ * This file is part of the fuelPriceStats package.
  *
  * (c) Nils Bohrs
  *

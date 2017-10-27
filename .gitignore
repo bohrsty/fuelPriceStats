@@ -1,2 +1,5 @@
 .project
+.buildpath
 node_modules
+config.php
+*.db
