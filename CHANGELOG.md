@@ -17,3 +17,4 @@
 
 ### Fixed
 - fix typo prize -> price
+- fix null prices if station closed, takes the previous price
