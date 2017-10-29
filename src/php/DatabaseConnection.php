@@ -1,4 +1,5 @@
 <?php
+require_once('Station.php');
 
 /*
  * This file is part of the fuelPriceStats package.
@@ -48,6 +49,8 @@ class DatabaseConnection {
         if(!isset($this->config['databaseFile']) || $this->config['databaseFile'] == '') {
             $this->config['databaseFile'] = 'data/fuelPriceStats.db';
         }
+        // set absolute path
+        $this->config['databaseFile'] = dirname(__FILE__).'/../../'.$this->config['databaseFile'];
         
         // check if database exists
         $createSchema = false;
@@ -135,5 +138,49 @@ class DatabaseConnection {
             'status' => 'OK',
             'message' => 'successful',
         );
+    }
+    
+    
+    /**
+     * loadStationsToArray($from, $to) load the station data from database between
+     * $from and $to and returns it as array of Station
+     *
+     * @param DateTimeInterface $from the date and time to start the data from
+     * @param DateTimeInterface $to the date and time to end the data
+     * @return array an array of the resulting Station data
+     */
+    public function loadStationsToArray($from, $to) {
+        
+        // prepare return
+        $stations = array();
+            
+        // prepare select
+        $stmt = $this->db->prepare('
+            SELECT *
+            FROM fuelPriceStats 
+            WHERE runtime BETWEEN :from AND :to
+        ');
+        // bind values
+        $stmt->bindValue(':from', $from->format('Y-m-d H:i:s'));
+        $stmt->bindValue(':to', $to->format('Y-m-d H:i:s'));
+        // execute
+        $result = $stmt->execute();
+        
+        // check insert
+        if($result === false) {
+            throw new Exception('Unable to get data from database ['.$this->db->lastErrorMsg().']');
+        }
+        
+        // fetch data
+        while($row = $result->fetchArray(SQLITE3_ASSOC)) {
+            $row['runtime'] = new DateTimeImmutable($row['runtime']);
+            $stations[] = new Station($row);
+        }
+        
+        // close statement
+        $stmt->close();
+        
+        // return
+        return $stations;
     }
 }
