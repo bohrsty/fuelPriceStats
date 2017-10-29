@@ -24,3 +24,6 @@ $config['fuel'] = '';
 
 // path to database file (default: ./data/fuelPriceStats.db
 $config['databaseFile'] = '';
+
+// delay tankerkoenig.de api call for random time to fulfill their terms of use
+$config['delayRandom'] = true;

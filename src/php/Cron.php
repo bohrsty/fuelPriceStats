@@ -37,6 +37,11 @@ class Cron {
      */
     public function runJob() {
         
+        // delay api request for random time
+        if($this->config['delayRandom'] === true) {
+            sleep(mt_rand(0, 15));
+        }
+        
         // get data from api
         $request = new ApiRequest($this->config);
         $response = $request->get();
