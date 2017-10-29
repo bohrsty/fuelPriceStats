@@ -46,6 +46,17 @@ class FuelPriceStats {
                 'message' => 'config.php not exists or not readable!',
                 'data' => array(),
             );
+        } else {
+            $config = self::checkConfig($this->config);
+            if($config['result'] == 'ERROR') {
+                return array(
+                    'status' => 'ERROR',
+                    'message' => 'config not valid: '.PHP_EOL.implode(PHP_EOL, $config['messages']),
+                    'data' => array(),
+                );
+            } else {
+                $this->config = $config['config'];
+            }
         }
         
         // check from and to
@@ -98,6 +109,86 @@ class FuelPriceStats {
             'status' => 'OK',
             'message' => 'Request successfull',
             'data' => $data,
+        );
+    }
+    
+    
+    /**
+     * checkConfig($config) check if the config is usable
+     * 
+     * @param array $config the config to check
+     * @return array an array containing the check result and error messages
+     */
+    public static function checkConfig($config) {
+        
+        // check if config is array
+        if(!is_array($config)) {
+            return array(
+                'result' => 'ERROR',
+                'messages' => array(
+                    'config has to be an array',
+                ),
+                'config' => array(),
+            );
+        }
+        
+        // check values
+        $result = 'OK';
+        $messages = array();
+        // apikey
+        if(!isset($config['apikey']) || $config['apikey'] == '') {
+            $result = 'ERROR';
+            $messages[] = 'apikey: is required and must not be an empty string';
+        } else {
+            $messages[] = 'apikey: OK';
+        }
+        // baseurl
+        if(isset($config['baseurl']) && $config['baseurl'] == '') {
+            $config['baseurl'] = 'https://creativecommons.tankerkoenig.de/json/prices.php';
+        }
+        if(!isset($config['baseurl']) || $config['baseurl'] == '' || filter_var($config['baseurl'], FILTER_VALIDATE_URL) === false) {
+            $result = 'ERROR';
+            $messages[] = 'baseurl: is required, must not be an empty string and has to be a valid url';
+        } else {
+            $messages[] = 'baseurl: OK';
+        }
+        // stations
+        if(!isset($config['stations']) || count($config['stations']) < 1) {
+            $result = 'ERROR';
+            $messages[] = 'stations: is required and has to contain at least one element';
+        } else {
+            $messages[] = 'stations: OK';
+        }
+        // fuel
+        if(!isset($config['fuel']) || $config['fuel'] == '') {
+            $result = 'ERROR';
+            $messages[] = 'fuel: is required and must not be an empty string';
+        } else {
+            $messages[] = 'fuel: OK';
+        }
+        // databaseFile
+        if(isset($config['databaseFile']) && $config['databaseFile'] == '') {
+            $config['databaseFile'] = 'data/fuelPriceStats.db';
+        }
+        if(!isset($config['databaseFile']) || $config['databaseFile'] == '') {
+            $result = 'ERROR';
+            $messages[] = 'databaseFile: is required and must not be an empty string';
+        } else {
+            $messages[] = 'databaseFile: OK';
+        }
+        // delayRandom
+        if(!isset($config['delayRandom']) || !is_bool($config['delayRandom'])) {
+            $result = 'ERROR';
+            $messages[] = 'delayRandom: is required and has to be boolean';
+        } else {
+            $messages[] = 'delayRandom: OK';
+        }
+        
+        // return
+        return array(
+            'result' => $result,
+            'messages' => $messages,
+            'config' => $config,
         );
     }
 }
