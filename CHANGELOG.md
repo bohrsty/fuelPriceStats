@@ -10,6 +10,7 @@
 - add check if config is valid
 
 ### Changed
+ - change access to last element of array to keep compatibility with PHP < 5.5
 
 
 ### Removed

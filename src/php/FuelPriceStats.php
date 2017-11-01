@@ -100,7 +100,12 @@ class FuelPriceStats {
         foreach($stations as $station) {
             $price = $station->getPrice();
             if($price == 'NULL') {
-                $price = (!isset($data[$station->getName()][$station->getFuel()]) ? 0 : end($data[$station->getName()][$station->getFuel()])['price']);
+                if(!isset($data[$station->getName()][$station->getFuel()])) {
+                    $price = 0;
+                } else {
+                    $lastStation = end($data[$station->getName()][$station->getFuel()]);
+                    $price = $lastStation['price'];
+                }
             }
             $data[$station->getName()][$station->getFuel()][] = array(
                 'runtime' => $station->getRuntime('Y-m-d H:i:s'),
