@@ -66,7 +66,7 @@ class ApiRequest {
     private function callApi($config) {
         
         // runtime
-        $runtime = new DateTimeImmutable();
+        $runtime = new DateTime();
         
         // call
         $response = file_get_contents($config['baseurl'].'?ids='.implode(',', $config['stations']).'&apikey='.$config['apikey']);

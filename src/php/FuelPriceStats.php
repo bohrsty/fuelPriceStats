@@ -51,7 +51,7 @@ class FuelPriceStats {
             if($config['result'] == 'ERROR') {
                 return array(
                     'status' => 'ERROR',
-                    'message' => 'config not valid: '.PHP_EOL.implode(PHP_EOL, $config['messages']),
+                    'message' => 'config not valid: '.PHP_EOL.implode(PHP_EOL, $config['messages'].PHP_EOL.PHP_EOL),
                     'data' => array(),
                 );
             } else {
@@ -61,9 +61,9 @@ class FuelPriceStats {
         
         // check from and to
         $from = '';
-        $to = new DateTimeImmutable();;
+        $to = new DateTime();;
         if(isset($_GET['from']) && preg_match('/\d\d\d\d\-\d\d\-\d\d/', $_GET['from']) === 1) {
-            $from = new DateTimeImmutable($_GET['from'].' 00:00:00');
+            $from = new DateTime($_GET['from'].' 00:00:00');
         } else {
             return array(
                 'status' => 'ERROR',
@@ -73,7 +73,7 @@ class FuelPriceStats {
         }
         if(isset($_GET['to'])) {
             if(preg_match('/\d\d\d\d\-\d\d\-\d\d/', $_GET['to']) === 1) {
-                $from = new DateTimeImmutable($_GET['from'].' 00:00:00');
+                $from = new DateTime($_GET['from'].' 00:00:00');
             } else {
                 return array(
                     'status' => 'ERROR',

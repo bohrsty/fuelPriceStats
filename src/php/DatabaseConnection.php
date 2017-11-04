@@ -173,7 +173,7 @@ class DatabaseConnection {
         
         // fetch data
         while($row = $result->fetchArray(SQLITE3_ASSOC)) {
-            $row['runtime'] = new DateTimeImmutable($row['runtime']);
+            $row['runtime'] = new DateTime($row['runtime']);
             $stations[] = new Station($row);
         }
         

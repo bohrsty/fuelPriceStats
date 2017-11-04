@@ -11,6 +11,7 @@
 
 ### Changed
  - change access to last element of array to keep compatibility with PHP < 5.5
+ - change DateTimeImmutable to DateTime to keep compatibility with PHP < 5.5
 
 
 ### Removed
@@ -19,3 +20,4 @@
 ### Fixed
 - fix typo prize -> price
 - fix null prices if station closed, takes the previous price
+- fix new lines on cli output
