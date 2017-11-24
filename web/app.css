@@ -7156,3 +7156,7 @@ tspan.mg-points-mono {
     font-size: 0.6rem;
 }
 @charset "UTF-8";
+
+.text-bold {
+	font-weight: bold;
+}

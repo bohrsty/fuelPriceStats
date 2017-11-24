@@ -159,6 +159,7 @@ class DatabaseConnection {
             SELECT *
             FROM fuelPriceStats 
             WHERE runtime BETWEEN :from AND :to
+            ORDER BY runtime ASC
         ');
         // bind values
         $stmt->bindValue(':from', $from->format('Y-m-d H:i:s'));

@@ -12,7 +12,13 @@ module.exports = {
 		path: path.resolve(__dirname, 'web')
 	},
 	plugins: [
-		new ExtractTextPlugin('app.css')
+		new ExtractTextPlugin('app.css'),
+		new webpack.ProvidePlugin({
+			$: 'jquery',
+			jQuery: 'jquery',
+			'window.jQuery': 'jquery',
+			Popper: ['popper.js', 'default']
+		})
 	],
 	module: {
 		rules: [
